@@ -1,0 +1,71 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  
+  <script>
+    
+    google.charts.load('current', {'packages':['bar'],'language': 'pt'});
+    google.charts.setOnLoadCallback(drawChart);
+    
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+      ['Meses', 'Orçado', 'Realizado', 'Economia'],
+      ['Janeiro', 9780.00, 6870.81, 1502.19],
+      ['Fevereiro', 8580.40, 6980.26, 3505.14],
+      ['Março', 9200.200,4560.35, 3200.65],
+      ['Abril',7530.40, 4582.40,2352.25],
+       ]);
+      
+      var options = {
+        chart: {
+          title: 'Google Charts',
+          subtitle: 'Formatando Valores para Reais',
+        },
+        bars: 'vertical',
+        vAxis: {format: 'currency'},
+        height: 400,
+        
+        
+        
+      };         
+      
+      var formatter = new google.visualization.NumberFormat({
+        groupingSymbol: '.',
+        decimalSymbol: ',',
+        negativeColor: 'red',
+        negativeParens: true,
+        prefix: 'R$ '
+      });
+      formatter.format(data, 1);
+      formatter.format(data, 2);
+      formatter.format(data, 3);
+      
+      
+      
+      var chart = new google.charts.Bar(document.getElementById('chart_div'));
+      
+      chart.draw(data, google.charts.Bar.convertOptions(options,formatter));
+    }
+    // REFLOW
+    $(window).resize(function(){
+      drawChart();
+    });
+  </script>
+  
+  <style>
+    #chart {
+      width: 100%; 
+      min-height: 450px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div id="chart">
+    <div id="chart_div"></div>
+  </div>
+</body>
+
+</html>
